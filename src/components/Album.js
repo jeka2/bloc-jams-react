@@ -20,7 +20,7 @@ class Album extends Component {
     this.audioElement.src = album.songs[0].audioSrc;
   }
 
-  play() {
+  /*play() {
     this.audioElement.play();
     this.setState({ isPlaying: true });
   }
@@ -45,7 +45,7 @@ class Album extends Component {
     }
 
   }
-
+*/
   render() {
     return (
       <section className="album">
@@ -64,8 +64,8 @@ class Album extends Component {
           <col id="song-duration-column" />
         </colgroup>
         <tbody className="song-name-list">
-        {this.state.album.songs.map( (song, index) => 
-             <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
+        {this.state.album.songs.map( (song, index) =>
+             <tr className="song" key={index} >
                <td className="song-actions">
                  <button>
                    <span className="song-number">{index+1}</span>
