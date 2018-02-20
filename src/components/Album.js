@@ -16,18 +16,25 @@ class Album extends Component {
       isPlaying: false,
       currentTime: 0,
       duration: album.songs[0].duration,
-      currentVolume: .3
-
+      currentVolume: .3,
+      intervalId: 0
     };
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
   }
 
+  timer() {
+
+  }
+
   componentDidMount(){
     this.eventListeners = {
        timeupdate: e => {
-         this.setState({ currentTime: this.audioElement.currentTime });
+         const intervalId = setInterval(this.timer, 1000);
+         this.setState({intervalId: intervalId});
+         this.setState({ currentTime: this.formatTime(this.audioElement.currentTime) });
+         console.log(this.state.intervalId);
        },
        durationchange: e => {
          this.setState({ duration: this.audioElement.duration });
@@ -41,6 +48,7 @@ class Album extends Component {
     this.audioElement.src = null;
     this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
     this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+    clearInterval(this.state.int);
   }
 
   play() {
@@ -88,7 +96,8 @@ class Album extends Component {
    handleTimeChange(e) {
      const newTime = this.audioElement.duration * e.target.value;
      this.audioElement.currentTime = newTime;
-     this.setState({ currentTime: formatTime(newTime) });
+     this.setState({ currentTime: this.formatTime(newTime)});
+
    }
 
    handleVolumeChange(e) {
@@ -98,10 +107,25 @@ class Album extends Component {
    }
 
    formatTime(time) {
+     var min = 0;
      if(typeof time !== 'number') {return "-:--"}
-     const min = time / 60;
-     const sec = min % 60;
-     return min + ":" + sec;
+     time = Math.floor(time);
+     if(time !== this.state.timeCounter) {
+       var timeCount = this.state.timeCounter++;
+
+     }
+     var sec = time % 60;
+
+     if(time % 60 === 0) {
+       min++;
+     }
+     console.log(this.state.timeCount)
+     return sec;
+
+   }
+
+   timer() {
+     return 1;
    }
 
 
