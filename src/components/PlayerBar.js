@@ -3,6 +3,12 @@ import React, { Component } from 'react';
 class PlayerBar extends Component {
 
   render() {
+    var style = {
+      color: 'red',
+      paddingLeft: '19px',
+      background: 'blue',
+    }
+
 
     return (
       <section className="player-bar">
